@@ -2,6 +2,8 @@ import pygame
 import random
 import time
 from Snake import Snake
+from pomocnicze import Kierunek
+from Apple import Apple
 
 #ustawienia
 width = 800
@@ -24,10 +26,17 @@ for x in range(25):
         tlo.blit(c_kafelek, pozycja)
         screen.blit(tlo, (0,0))
         pygame.display.flip()
-        clock.tick(202)
+        clock.tick(700)
 
 #obiekty
 snake = Snake()
+apples = []
+apple = Apple()
+apples.append(apple)
+
+#zdarzenia
+game_tick = pygame.USEREVENT + 0
+pygame.time.set_timer(game_tick, 900)
 
 #główna pętla
 runnig = True
@@ -39,12 +48,27 @@ while runnig:
             if event.key == pygame.K_ESCAPE:
                 runnig = False
 
+            #sterowanie
+            if event.key == pygame.K_d:
+                snake.ustaw_kierunek(Kierunek.PRAWO)
+            if event.key == pygame.K_a:
+                snake.ustaw_kierunek(Kierunek.LEWO)
+            if event.key == pygame.K_w:
+                snake.ustaw_kierunek(Kierunek.GORA)
+            if event.key == pygame.K_s:
+                snake.ustaw_kierunek(Kierunek.DOL)
+
+        if event.type == game_tick:
+            snake.move()
+
         elif event.type == pygame.QUIT:
             runnig = False
     
     #rysowanie
     screen.blit(tlo, (0,0))
-    # decyzja do podjęcia: 1 albo 2
-    #snake.blit(screen)
-    #screen.blit(snake.obraz, snake.pozycja)
+
+    screen.blit(snake.glowa, snake.pozycja)
+    for a in apples:
+        screen.blit(a.obrazek, a.rect)
+
     pygame.display.flip()
