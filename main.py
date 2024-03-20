@@ -36,7 +36,7 @@ apples.append(apple)
 
 #zdarzenia
 game_tick = pygame.USEREVENT + 0
-pygame.time.set_timer(game_tick, 900)
+pygame.time.set_timer(game_tick, 200)
 
 #główna pętla
 runnig = True
@@ -71,4 +71,19 @@ while runnig:
     for a in apples:
         screen.blit(a.obrazek, a.rect)
 
+    for s in snake.segments:
+        screen.blit(s.obraz, s.rect)
+
     pygame.display.flip()
+
+    #kolizje
+    eat_apple = snake.pozycja == apple.rect
+    if eat_apple:
+        print("eat apple")
+        apples.remove(apple)
+        apple = Apple()
+        apples.append(apple)
+        snake.new_segment()
+
+    
+    przegrana = False
