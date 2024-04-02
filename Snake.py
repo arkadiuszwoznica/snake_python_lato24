@@ -45,3 +45,21 @@ class Snake:
 
     def new_segment(self):
         self.segments.append(Segment(self.poprzednia_pozycja))
+    
+    def sprawdz_kolizje(self):
+        # Sprawdzenie kolizji głowy z segmentami węża
+        for segment in self.segments:
+            if self.pozycja.colliderect(segment.rect):
+                return True
+
+        # Sprawdzenie wychodzenia poza ekran
+        if self.pozycja.left < 0 or self.pozycja.right > 800 or \
+        self.pozycja.top < 0 or self.pozycja.bottom > 600:
+            return True
+
+        return False
+
+
+
+        
+        

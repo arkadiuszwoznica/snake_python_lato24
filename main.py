@@ -77,7 +77,8 @@ while runnig:
     pygame.display.flip()
 
     #kolizje
-    eat_apple = snake.pozycja == apple.rect
+    eat_apple = snake.pozycja.colliderect(apple.rect)
+
     if eat_apple:
         print("eat apple")
         apples.remove(apple)
@@ -85,5 +86,6 @@ while runnig:
         apples.append(apple)
         snake.new_segment()
 
-    
-    przegrana = False
+    if snake.sprawdz_kolizje():
+        runnig = False
+
