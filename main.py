@@ -77,7 +77,7 @@ while runnig:
     pygame.display.flip()
 
     #kolizje
-    eat_apple = snake.pozycja.colliderect(apple.rect)
+    eat_apple = snake.pozycja == apple.rect
 
     if eat_apple:
         print("eat apple")
